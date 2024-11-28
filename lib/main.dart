@@ -4,9 +4,9 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       appBar: AppBar(
-        title: Text("위젯을 비율로 배치하기."),
+        title: const Text("위젯을 비율로 배치하기."),
       ),
-      body: Body(),
+      body: const Body(),
     ),
   ));
 }
@@ -16,43 +16,111 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                    color: Colors.limeAccent,
-                    borderRadius: BorderRadius.circular(150)),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(140)),
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              "count 0",
-              style: TextStyle(color: Colors.white, fontSize: 34),
-            ),
-          )
-        ],
+    return Column(
+      children: const [
+        ExampleStateless(),
+        ExampleStateful(),
+      ],
+    );
+  }
+}
+
+class ExampleStateless extends StatelessWidget {
+  const ExampleStateless({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Container(
+        color: Colors.red,
       ),
     );
   }
 }
+
+class ExampleStateful extends StatefulWidget {
+  const ExampleStateful({super.key});
+
+  @override
+  State<ExampleStateful> createState() => _ExampleStatefulState();
+}
+
+class _ExampleStatefulState extends State<ExampleStateful> {
+  int index = 0;
+
+  void _incrementIndex() {
+    setState(() {
+      if (index == 5) {
+        index = 0;
+      } else {
+        index++;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: GestureDetector(
+        onTap: _incrementIndex,
+        child: Container(
+          color: Colors.blue.withOpacity(index/5),
+          child: Center(
+            child: Text(
+              "$index",
+              style: const TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// class Body extends StatelessWidget {
+//   const Body({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Stack(
+//         children: [
+//           Align(
+//             alignment: Alignment.center,
+//             child: Align(
+//               alignment: Alignment.center,
+//               child: Container(
+//                 width: 300,
+//                 height: 300,
+//                 decoration: BoxDecoration(
+//                     color: Colors.limeAccent,
+//                     borderRadius: BorderRadius.circular(150)),
+//               ),
+//             ),
+//           ),
+//           Align(
+//             alignment: Alignment.center,
+//             child: Container(
+//               width: 200,
+//               height: 200,
+//               decoration: BoxDecoration(
+//                   color: Colors.red, borderRadius: BorderRadius.circular(140)),
+//             ),
+//           ),
+//           Align(
+//             alignment: Alignment.center,
+//             child: Text(
+//               "count 0",
+//               style: TextStyle(color: Colors.white, fontSize: 34),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // class Body extends StatelessWidget {
 //   const Body({super.key});
